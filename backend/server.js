@@ -13,5 +13,5 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log("Servidor en funcionamiento en Host Local")
+    console.log("Servidor en funcionamiento en Host Local: http://localhost:5000/")
 });
