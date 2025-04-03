@@ -1,23 +1,13 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import AppRouter from './mis-routers/Routers';
+import Footer from "./components/footer/Footer.jsx"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src="https://pbs.twimg.com/media/FWgQYm5X0AABBNI.jpg" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppRouter />
+      <Footer />
     </div>
   );
 }
