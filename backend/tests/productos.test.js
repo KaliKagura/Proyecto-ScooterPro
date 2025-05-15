@@ -22,10 +22,16 @@ describe("API de Productos", () => {
     };
 
     const response = await request(app).post("/productos").send(newProduct);
-    expect(response.statusCode).toBe(201);
-    expect(response.body.data[0]).toHaveProperty("id");
 
-    createdProductId = response.body.data[0].id;
+    console.log("Respuesta completa del POST:", response.body);
+
+    expect(response.statusCode).toBe(201);
+    const productoCreado = Array.isArray(response.body.data)
+      ? response.body.data[0]
+      : response.body.data;
+
+    expect(productoCreado).toHaveProperty("id");
+    createdProductId = productoCreado.id;
   });
 
   // 3. Obtener un producto por ID

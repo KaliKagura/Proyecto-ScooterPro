@@ -51,7 +51,8 @@ router.post("/", async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("productos")
-      .insert([{ nombre, descripcion, precio, stock, imagen_url }]);
+      .insert([{ nombre, descripcion, precio, stock, imagen_url }])
+      .select();
 
     if (error) throw error;
 
