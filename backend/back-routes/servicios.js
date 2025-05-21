@@ -3,6 +3,7 @@ import supabase from "../supabase/client.js";
 
 const router = express.Router();
 
+// todos los productos
 router.get("/", async (req, res) => {
   try {
     const { data, error } = await supabase.from("servicios").select("*");
@@ -11,6 +12,25 @@ router.get("/", async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     console.error("Error al obtener servicios:", err.message);
+    res.status(500).json({ error: "Error al obtener servicios" });
+  }
+});
+
+// paginado de productos
+router.get("/", async (req, res) => {
+  const { estado, limit = 10, page = 1 } = req.query;
+  const offset = (page - 1) * limit;
+
+  try {
+    let query = supabase.from("servicios").select("*");
+
+    if (estado) query = query.eq("estado", estado);
+
+    const { data, error } = await query.range(offset, offset + Number(limit) - 1);
+    if (error) throw error;
+
+    res.status(200).json(data);
+  } catch (err) {
     res.status(500).json({ error: "Error al obtener servicios" });
   }
 });
@@ -102,6 +122,67 @@ router.put("/:id/estado", async (req, res) => {
   } catch (err) {
     console.error("Error al actualizar estado del servicio:", err.message);
     res.status(500).json({ error: "Error al actualizar estado del servicio" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    fecha,
+    tipo_servicio,
+    cliente_id,
+    marca_scooter,
+    modelo_scooter,
+    descripcion,
+    tecnico_id,
+    estado,
+  } = req.body;
+
+  const campos = {
+    ...(fecha && { fecha }),
+    ...(tipo_servicio && { tipo_servicio }),
+    ...(cliente_id && { cliente_id }),
+    ...(marca_scooter && { marca_scooter }),
+    ...(modelo_scooter && { modelo_scooter }),
+    ...(descripcion && { descripcion }),
+    ...(tecnico_id && { tecnico_id }),
+    ...(estado && { estado }),
+  };
+
+  if (Object.keys(campos).length === 0) {
+    return res.status(400).json({ error: "Ningún campo para actualizar" });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("servicios")
+      .update(campos)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    res.status(200).json({ mensaje: "Servicio actualizado", data });
+  } catch (err) {
+    console.error("Error al actualizar servicio:", err.message);
+    res.status(500).json({ error: "Error al actualizar servicio" });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("servicios")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+
+    res.status(200).json({ mensaje: "Servicio eliminado", data });
+  } catch (err) {
+    console.error("Error al eliminar servicio:", err.message);
+    res.status(500).json({ error: "Error al eliminar servicio" });
   }
 });
 

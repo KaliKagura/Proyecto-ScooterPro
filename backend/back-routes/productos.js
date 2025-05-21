@@ -40,6 +40,22 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// buscar por nombre
+router.get("/", async (req, res) => {
+  const { nombre } = req.query;
+  try {
+    let query = supabase.from("productos").select("*");
+    if (nombre) {
+      query = query.ilike("nombre", `%${nombre}%`);
+    }
+    const { data, error } = await query;
+    if (error) throw error;
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Error al obtener productos" });
+  }
+});
+
 // Crear nuevo producto
 router.post("/", async (req, res) => {
   const { nombre, descripcion, precio, stock, imagen_url } = req.body;
