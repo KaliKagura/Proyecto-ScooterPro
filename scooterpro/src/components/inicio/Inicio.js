@@ -1,3 +1,10 @@
-export default function Inicio() {
-    return <h1>Pagina Inicio</h1>
+import "./Inicio.css";
+
+export default function Catalogo() {
+    return (
+        <div>
+            Hola mundo
+        </div>
+    );
+
 }
