@@ -4,6 +4,7 @@ import iconoCarrito from '../assets/svg/cart-shopping-solid.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AgregarCarrito } from '../stores/carrito';
 
+
 const ProductoCarrito = (props) => {
     const carts = useSelector(store => store.cart.items);
     console.log(carts);
@@ -18,10 +19,10 @@ const ProductoCarrito = (props) => {
     };
     
     return (
-        <div className='bg-white p-5 rounded-xl shadow-sm'>
+        <div className='bg-white p-7 rounded-xl shadow-sm w-70 mx-auto'>
             {/* Ajuste del link para incluir /catalogo */}
             <NavLink to={`/catalogo/${slug}`}>
-                <img src={img} alt='' className='w-full h-80 object-cover object-top drop-shadow-[0_80px_30px_#0007' />
+                <img src={img} alt='' className='w-full h-full object-cover object-top drop-shadow-[0_80px_30px_#0007' />
             </NavLink>
             <h3 className='text-2xl py-3 text-center font-medium'>{nombre}</h3>
             <div className='flex justify-between items-center'>

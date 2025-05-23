@@ -1,10 +1,15 @@
-import "./Inicio.css";
+import React from 'react'
 
-export default function Catalogo() {
+const inicio = () => {
     return (
-        <div>
-            Hola mundo
-        </div>
-    );
-
+        <section class="banner">
+            <div class="content">
+                <p>Scooters</p>
+                <h2>La mejor forma de moverte</h2>
+                <a href="#">Ver más</a>
+            </div>
+        </section>
+    )
 }
+
+export default inicio
