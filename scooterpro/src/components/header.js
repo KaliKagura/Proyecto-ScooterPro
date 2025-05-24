@@ -5,6 +5,7 @@ import { toggleStatusSC } from "../stores/carrito";
 import logo from "../assets/img/logotest.png";
 import iconoCarrito from "../assets/svg/cart-shopping-solid.svg";
 import { NavLink } from "react-router-dom";
+import iconoUsuario from "../assets/svg/user-solid.svg";
 
 const Header = () => {
     const [totalCantidad, setTotalCantidad] = useState(0);
@@ -34,14 +35,20 @@ const Header = () => {
                     <span className="text-xl font-semibold">ScooterPro</span>
                 </NavLink>
 
-                <div
-                    className="w-10 h-10 bg-gray-700 rounded-full flex justify-center items-center relative cursor-pointer"
-                    onClick={handleAbrirCarrito}
-                >
-                    <img src={iconoCarrito} alt="" className="w-6" />
-                    <span className="absolute top-0 right-0 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
-                        {totalCantidad}
-                    </span>
+                <div className="flex items-center gap-2">
+                    <a href="" className="w-10 h-10 bg-white rounded-full flex justify-center items-center hover:opacity-75">
+                        <img src={iconoUsuario} alt="Usuario" className="w-6" />
+                    </a>
+
+                    <div
+                        className="w-10 h-10 bg-white rounded-full flex justify-center items-center relative cursor-pointer"
+                        onClick={handleAbrirCarrito}
+                    >
+                        <img src={iconoCarrito} alt="" className="w-6" />
+                        <span className="absolute top-0 right-0 bg-red-500 text-white text-sm w-5 h-5 rounded-full flex justify-center items-center">
+                            {totalCantidad}
+                        </span>
+                    </div>
                 </div>
             </header>
         </div>
