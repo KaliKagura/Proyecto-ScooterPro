@@ -7,6 +7,7 @@ import QuienesSomos from '../paginas/quienesSomos';
 import Servicios from '../paginas/servicios';
 import Contacto from '../paginas/contacto';
 import Registro from '../paginas/registro';
+import Login from '../paginas/login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
@@ -22,6 +23,7 @@ const AppRouter = () => {
           <Route path='servicios' element={<Servicios />} />
           <Route path='contacto' element={<Contacto />} />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
