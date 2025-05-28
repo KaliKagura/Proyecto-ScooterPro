@@ -1,9 +1,15 @@
 import React from 'react'
-
-const Inicio = () => {
+import './inicio.css';
+const inicio = () => {
     return (
-        <div>Inicio</div>
+        <section class="banner">
+            <div class="content-banner">
+                <h1>Nuevos</h1>
+                <h2>Modelos</h2>
+                <a href="/catalogo">Ver más</a>
+            </div>
+        </section>
     )
 }
 
-export default Inicio
+export default inicio
