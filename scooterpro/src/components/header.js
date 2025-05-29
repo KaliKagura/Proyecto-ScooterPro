@@ -35,7 +35,7 @@ const Header = () => {
           <span className="text-xl font-semibold">ScooterPro</span>
         </NavLink>
 
-                {/* <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
                     <a href="" className="w-10 h-10 bg-white rounded-full flex justify-center items-center hover:opacity-75">
                         <img src={iconoUsuario} alt="Usuario" className="w-6" />
                     </a>
@@ -50,23 +50,24 @@ const Header = () => {
                         </span>
                     </div>
                 </div> */}
-            {/* </header> */}
+        {/* </header> */}
+
         {/* Botones de Sesión */}
         <div className="flex items-center gap-4">
-        <NavLink
+          <NavLink
             to="/login"
             className="text-white hover:text-[#ff7e5f] font-semibold transition-colors duration-300"
-        >
+          >
             Iniciar sesión
-        </NavLink>
-        <NavLink
+          </NavLink>
+          <NavLink
             to="/registro"
             className="bg-[#ff7e5f] text-white px-3 py-1 rounded-lg hover:bg-[#eb684e] transition-all"
-        >
+          >
             Registrarse
-        </NavLink>
+          </NavLink>
 
-        {/* Carrito */}
+          {/* Carrito */}
           <div
             className="w-10 h-10 bg-white rounded-full flex justify-center items-center relative cursor-pointer"
             onClick={handleAbrirCarrito}
