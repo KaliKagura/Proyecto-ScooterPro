@@ -1,29 +1,32 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Inicio from "../components/inicio/Inicio.js";
-import QuienesSomos from "../components/quienesSomos/QuienesSomos.jsx";
-import Catalogo from "../components/catalogo/Catalogo.js";
-import Header from "../components/header/Header.jsx";
-import Navbar from "../components/navbar/Navbar.jsx";
-import Servicios from '../components/servicios/Servicios.jsx';
-import Contacto from '../components/contacto/Contacto.jsx';
+import Layout from '../components/layout';
+import Inicio from '../paginas/inicio';
+import Catalogo from '../paginas/catalogo';
+import Producto from '../paginas/producto';
+import QuienesSomos from '../paginas/quienesSomos';
+import Servicios from '../paginas/servicios';
+import Contacto from '../paginas/contacto';
+import Registro from '../paginas/registro';
+import Login from '../paginas/login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 const AppRouter = () => {
   return (
-    <Router>
-      <Header />
-      <Navbar />
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/inicio" element={<Inicio />} />
-        <Route path="/QuienesSomos" element={<QuienesSomos />} />
-        <Route path="/catalogo" element={<Catalogo />} />
-        <Route path="/servicios" element={<Servicios />} />
-        <Route path="/contacto" element={<Contacto />} />
-
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Inicio />} />
+          <Route path='/catalogo' element={<Catalogo />} />
+          <Route path='/catalogo/:slug' element={<Producto />} />
+          <Route path='/quienesSomos' element={<QuienesSomos />} />
+          <Route path='servicios' element={<Servicios />} />
+          <Route path='contacto' element={<Contacto />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 

@@ -1,0 +1,40 @@
+.banner {
+    background-image: url(../assets/img/bannerInicio.png);
+    width: 100vw;
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat;/* No repite la imagen */
+    margin-left: calc(50% - 50vw);
+}
+
+.content-banner {
+    max-width: 90rem;
+    margin: 0 auto;
+    padding: 25rem 0;
+    text-align: left;
+    box-sizing: border-box;
+}  
+
+.content-banner h1 {
+    color : #053d47;
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}   
+
+.content-banner h2 {
+    color : #ffffff;
+    font-size: 3.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}   
+
+.content-banner a {
+    margin-top: 2rem;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #053d47;
+    display: inline-block;
+    padding: 1rem 3rem;
+    text-transform: uppercase;
+    border-radius: 3rem;
+}   
