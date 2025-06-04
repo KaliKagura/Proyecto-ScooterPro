@@ -9,6 +9,7 @@ const Registro = () => {
     nombre: "",
     telefono: "",
     direccion: "",
+    rol: "cliente",
   });
 
   const [mensaje, setMensaje] = useState("");

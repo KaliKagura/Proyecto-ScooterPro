@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import supabase from './supabaseClient';
 
 export const signUpUser = async ({ email, password, nombre, rol, telefono, direccion }) => {
   // Paso 1: Crear usuario en Supabase Auth

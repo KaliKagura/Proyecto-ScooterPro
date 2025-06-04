@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import './css/login.css';
-
-const supabase = createClient(process.env.REACT_APP_SUPA_URL, process.env.REACT_APP_SUPA_KEY);
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./css/login.css";
+import supabase from "../supabase/supabaseClient.js";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +24,8 @@ export default function Login() {
     if (error) {
       setError(error.message);
     } else {
-      alert('Inicio de sesión exitoso');
+      alert("Inicio de sesión exitoso");
+      navigate("/");
     }
 
     setLoading(false);
@@ -48,7 +50,7 @@ export default function Login() {
           required
         />
         <button type="submit" disabled={loading}>
-          {loading ? 'Cargando...' : 'Ingresar'}
+          {loading ? "Cargando..." : "Ingresar"}
         </button>
         {error && <p className="error">{error}</p>}
       </form>
