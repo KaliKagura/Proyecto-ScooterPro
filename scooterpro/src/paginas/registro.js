@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { signUpUser } from '../supabase/authService';
+import React, { useState } from "react";
+import "../paginas/css/registro.css"; // Asegúrate que esta ruta sea correcta
+import { signUpUser } from "../supabase/authService";
 
 const Registro = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    nombre: '',
-    rol: '',
-    telefono: '',
-    direccion: '',
+    email: "",
+    password: "",
+    nombre: "",
+    telefono: "",
+    direccion: "",
   });
 
-  const [mensaje, setMensaje] = useState('');
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,25 +22,58 @@ const Registro = () => {
     e.preventDefault();
     try {
       await signUpUser(formData);
-      setMensaje('Usuario registrado con éxito');
+      setMensaje("Usuario registrado con éxito");
+      setError(false);
     } catch (error) {
       setMensaje(`Error: ${error.message}`);
+      setError(true);
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Registro de Usuario</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input name="email" type="email" placeholder="Correo" onChange={handleChange} required />
-        <input name="password" type="password" placeholder="Contraseña" onChange={handleChange} required />
-        <input name="nombre" type="text" placeholder="Nombre" onChange={handleChange} required />
-        <input name="rol" type="text" placeholder="Rol (admin/cliente)" onChange={handleChange} required />
-        <input name="telefono" type="text" placeholder="Teléfono" onChange={handleChange} required />
-        <input name="direccion" type="text" placeholder="Dirección" onChange={handleChange} required />
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Registrarse</button>
+    <div className="registro-container">
+      <form className="registro-form" onSubmit={handleSubmit}>
+        <h2>Registro de Usuario</h2>
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Nombre"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="telefono"
+          placeholder="Teléfono"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="direccion"
+          placeholder="Dirección"
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Registrarse</button>
+        {mensaje && (
+          <p className={`mensaje ${error ? "error" : "exito"}`}>{mensaje}</p>
+        )}
       </form>
-      {mensaje && <p className="mt-4">{mensaje}</p>}
     </div>
   );
 };
