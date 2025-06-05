@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleStatusSC } from "../stores/carrito";
 import { NavLink } from "react-router-dom";
@@ -10,9 +11,11 @@ import iconoUsuario from "../assets/svg/user-solid.svg";
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState("");
   const [totalCantidad, setTotalCantidad] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
@@ -24,15 +27,55 @@ const Header = () => {
   }, [carts]);
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data?.user || null);
-    };
-    getUser();
+    const getUserAndName = async () => {
+      const { data: authData } = await supabase.auth.getUser();
+      const currentUser = authData?.user || null;
 
+      if (!currentUser) {
+        // Si no hay usuario, limpiamos todo el estado
+        setUser(null);
+        setUserName("");
+        return;
+      }
+
+      // Si hay usuario, actualizamos estados
+      setUser(currentUser);
+
+      const { data, error } = await supabase
+        .from("usuarios")
+        .select("nombre")
+        .eq("id", currentUser.id)
+        .single();
+
+      if (data) {
+        setUserName(data.nombre);
+      } else {
+        console.error("No se encontró nombre:", error);
+        setUserName("");
+      }
+    };
+
+    getUserAndName();
+
+    // Listener que detecta cambios en la sesión (login/logout)
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user || null);
+      async (_event, session) => {
+        if (!session) {
+          setUser(null);
+          setUserName("");
+        } else {
+          const user = session.user;
+          setUser(user);
+
+          const { data } = await supabase
+            .from("usuarios")
+            .select("nombre")
+            .eq("id", user.id)
+            .single();
+
+          if (data) setUserName(data.nombre);
+          else setUserName("");
+        }
       }
     );
 
@@ -61,7 +104,9 @@ const Header = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setUserName("");
     setMenuVisible(false);
+    navigate("/");
   };
 
   return (
@@ -89,13 +134,17 @@ const Header = () => {
               </NavLink>
             </>
           ) : (
-            <div className="relative" ref={menuRef}>
+            <div className="relative flex items-center gap-2" ref={menuRef}>
               <div
                 className="w-10 h-10 bg-white rounded-full flex justify-center items-center cursor-pointer"
                 onClick={() => setMenuVisible(!menuVisible)}
               >
                 <img src={iconoUsuario} alt="Usuario" className="w-6" />
               </div>
+
+              <span className="text-white font-medium select-none">
+                {userName || user.email}
+              </span>
 
               {menuVisible && (
                 <div className="absolute right-0 mt-2 w-36 bg-white text-black rounded shadow-lg z-50 py-2">

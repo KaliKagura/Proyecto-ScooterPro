@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./css/login.css";
 import supabase from "../supabase/supabaseClient.js";
@@ -53,6 +54,12 @@ export default function Login() {
           {loading ? "Cargando..." : "Ingresar"}
         </button>
         {error && <p className="error">{error}</p>}
+
+        <div style={{ textAlign: "right", marginTop: "10px" }}>
+          <Link to="/pass-recovery" className="forgot-password-link">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
       </form>
     </div>
   );
