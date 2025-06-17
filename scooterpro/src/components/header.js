@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleStatusSC } from "../stores/carrito";
 import { NavLink } from "react-router-dom";
@@ -12,10 +11,10 @@ import iconoUsuario from "../assets/svg/user-solid.svg";
 const Header = () => {
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [totalCantidad, setTotalCantidad] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
-  const navigate = useNavigate();
 
   const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
@@ -32,23 +31,23 @@ const Header = () => {
       const currentUser = authData?.user || null;
 
       if (!currentUser) {
-        // Si no hay usuario, limpiamos todo el estado
         setUser(null);
         setUserName("");
+        setUserRole("");
         return;
       }
 
-      // Si hay usuario, actualizamos estados
       setUser(currentUser);
 
       const { data, error } = await supabase
         .from("usuarios")
-        .select("nombre")
+        .select("nombre, rol")
         .eq("id", currentUser.id)
         .single();
 
       if (data) {
         setUserName(data.nombre);
+        setUserRole(data.rol);
       } else {
         console.error("No se encontró nombre:", error);
         setUserName("");
@@ -57,24 +56,29 @@ const Header = () => {
 
     getUserAndName();
 
-    // Listener que detecta cambios en la sesión (login/logout)
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         if (!session) {
           setUser(null);
           setUserName("");
+          setUserRole("");
         } else {
           const user = session.user;
           setUser(user);
 
           const { data } = await supabase
             .from("usuarios")
-            .select("nombre")
+            .select("nombre, rol")
             .eq("id", user.id)
             .single();
 
-          if (data) setUserName(data.nombre);
-          else setUserName("");
+          if (data) {
+            setUserName(data.nombre);
+            setUserRole(data.rol);
+          } else {
+            setUserName("");
+            setUserRole("");
+          };
         }
       }
     );
@@ -105,8 +109,9 @@ const Header = () => {
     await supabase.auth.signOut();
     setUser(null);
     setUserName("");
+    setUserRole("");
     setMenuVisible(false);
-    navigate("/");
+    window.location.href = "/";
   };
 
   return (
@@ -147,7 +152,16 @@ const Header = () => {
               </span>
 
               {menuVisible && (
-                <div className="absolute right-0 mt-2 w-36 bg-white text-black rounded shadow-lg z-50 py-2">
+                <div className="absolute right-0 top-full mt-2 w-40 bg-white text-black rounded shadow-lg z-50 py-2">
+                  {userRole === "admin" && (
+                    <NavLink
+                      to="/admin"
+                      className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
+                      onClick={() => setMenuVisible(false)}
+                    >
+                      Panel de Admin
+                    </NavLink>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100"
