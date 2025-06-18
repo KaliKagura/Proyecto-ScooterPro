@@ -28,7 +28,7 @@ const AppRouter = () => {
           <Route path="contacto" element={<Contacto />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" elemnt={<AdminPanel />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Route>
       </Routes>
     </BrowserRouter>
