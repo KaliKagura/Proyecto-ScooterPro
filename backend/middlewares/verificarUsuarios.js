@@ -1,4 +1,4 @@
-import { supabase } from "../supabase/client.js";
+import supabase from "../supabase/client.js";
 
 export const verificarUsuario = async (req, res, next) => {
   const token = req.headers.authorization?.replace("Bearer ", "");

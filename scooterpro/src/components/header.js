@@ -5,20 +5,24 @@ import { toggleStatusSC } from "../stores/carrito";
 import logo from "../assets/img/logotest.png";
 import iconoCarrito from "../assets/svg/cart-shopping-solid.svg";
 import { NavLink } from "react-router-dom";
-import iconoUsuario from "../assets/svg/user-solid.svg";
+// import iconoUsuario from "../assets/svg/user-solid.svg";
 
 const Header = () => {
+  // Estado local para la suma total de cantidad de productos en el carrito
   const [totalCantidad, setTotalCantidad] = useState(0);
+  // Obtiene el array de productos en carrito del store redux
   const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
   //const navigate = useNavigate();
 
+  // Calculo cantidad total tras cambios en carrito
   useEffect(() => {
     let total = 0;
     carts.forEach((item) => (total += item.cantidad));
     setTotalCantidad(total);
   }, [carts]);
 
+  // funcion para abrir o cerrar carrito
   const handleAbrirCarrito = () => {
     dispatch(toggleStatusSC());
   };
@@ -65,6 +69,9 @@ const Header = () => {
             className="bg-[#ff7e5f] text-white px-3 py-1 rounded-lg hover:bg-[#eb684e] transition-all"
           >
             Registrarse
+          </NavLink>
+          <NavLink to="/administracion" className="bg-slate-700 px-4 py-2 rounded hover:bg-slate-600">
+            admin
           </NavLink>
 
           {/* Carrito */}

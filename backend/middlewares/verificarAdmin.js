@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import supabase from "./supabase/client.js";
+import supabase from "../supabase/client.js";
 
 export async function verificarAdmin(req, res, next) {
   const authHeader = req.headers["authorization"];

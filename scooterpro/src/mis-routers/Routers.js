@@ -1,4 +1,3 @@
-import React from 'react'
 import Layout from '../components/layout';
 import Inicio from '../paginas/inicio';
 import Catalogo from '../paginas/catalogo';
@@ -8,7 +7,9 @@ import Servicios from '../paginas/servicios';
 import Contacto from '../paginas/contacto';
 import Registro from '../paginas/registro';
 import Login from '../paginas/login';
+import Compra from '../paginas/compra';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PerfilAdmin from '../paginas/administracion/perfilAdmin'
 
 
 const AppRouter = () => {
@@ -24,6 +25,8 @@ const AppRouter = () => {
           <Route path='contacto' element={<Contacto />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/compra" element={<Compra />} />
+          <Route path="/administracion" element={<PerfilAdmin />} />
         </Route>
       </Routes>
     </BrowserRouter>

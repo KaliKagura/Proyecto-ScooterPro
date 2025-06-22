@@ -3,6 +3,17 @@ import supabase from "../supabase/client.js";
 
 const router = express.Router();
 
+// Función para generar slug desde un texto
+function generarSlug(texto) {
+  return texto
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')           // espacios por guiones
+    .replace(/[^\w\-]+/g, '')       // elimina caracteres no alfanuméricos
+    .replace(/\-\-+/g, '-');        // múltiples guiones por uno solo
+}
+
 // Obtener todos los productos
 router.get("/", async (req, res) => {
   try {
@@ -40,7 +51,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// buscar por nombre
+// Buscar por nombre
 router.get("/", async (req, res) => {
   const { nombre } = req.query;
   try {
@@ -58,16 +69,20 @@ router.get("/", async (req, res) => {
 
 // Crear nuevo producto
 router.post("/", async (req, res) => {
-  const { nombre, descripcion, precio, stock, imagen_url } = req.body;
+  const { nombre, descripcion, precio, stock, imagen_url, tipo_producto, marca } = req.body;
 
   if (!nombre || !precio || !stock) {
     return res.status(400).json({ error: "Faltan campos obligatorios" });
   }
 
+  const slug = generarSlug(nombre);
+  console.log("Nombre recibido:", nombre);
+  console.log("Slug generado:", slug);
+
   try {
     const { data, error } = await supabase
       .from("productos")
-      .insert([{ nombre, descripcion, precio, stock, imagen_url }])
+      .insert([{ nombre, descripcion, precio, stock, imagen_url, tipo_producto, marca, slug }])
       .select();
 
     if (error) throw error;
@@ -82,12 +97,17 @@ router.post("/", async (req, res) => {
 // Actualizar producto existente
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { nombre, descripcion, precio, stock, imagen_url } = req.body;
+  const { nombre, descripcion, precio, stock, imagen_url, tipo_producto, marca } = req.body;
+
+  const slug = nombre ? generarSlug(nombre) : undefined;
 
   try {
+    const updateData = { nombre, descripcion, precio, stock, imagen_url, tipo_producto, marca };
+    if (slug) updateData.slug = slug;
+
     const { data, error } = await supabase
       .from("productos")
-      .update({ nombre, descripcion, precio, stock, imagen_url })
+      .update(updateData)
       .eq("id", id);
 
     if (error) throw error;

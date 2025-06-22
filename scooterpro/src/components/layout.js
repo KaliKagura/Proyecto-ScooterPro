@@ -17,7 +17,7 @@ const Layout = () => {
       >
         <Header />
         <Navbar />
-        <main className="flex-grow w-full px-5">
+        <main className="flex-grow w-full">
           <Outlet />
         </main>
       </div>
