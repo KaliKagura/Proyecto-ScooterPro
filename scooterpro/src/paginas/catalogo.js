@@ -19,9 +19,11 @@ const Catalogo = () => {
   return (
     <div className="max-w-[1500px] mx-auto px-4 py-6">
       <h1 className="text-2xl mb-8 text-center">Lista de Productos</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-1 justify-items-center">
         {productos.map((producto, key) => (
-          <ProductoCarrito key={key} data={producto} />
+          <div key={key} className="w-64 h-96 mb-10">
+            <ProductoCarrito data={producto} />
+          </div>
         ))}
       </div>
     </div>

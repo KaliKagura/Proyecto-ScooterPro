@@ -32,7 +32,7 @@ const Compra = () => {
 
                 if (data) {
                     datos.push({ ...data, cantidad: item.cantidad });
-                    totalTemp += item.cantidad * data.precio;
+                    totalTemp += item.cantidad * Number(data.precio);
                 }
             }
 
@@ -110,7 +110,9 @@ const Compra = () => {
                         <p>{p.nombre} x{p.cantidad} = ${p.precio * p.cantidad}</p>
                     </div>
                 ))}
-                <p className="mt-4 font-bold text-lg">Total: ${total}</p>
+                <p className="mt-4 font-bold text-lg">
+                    Total: ${etapa === 'resumen' ? boleta?.total_pago : total}
+                </p>
                 <button onClick={handleCancelar} className="mt-6 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Cancelar compra</button>
             </div>
 

@@ -43,9 +43,9 @@ const ProductoCarrito = ({ data }) => {
   };
 
   return (
-    <div className="producto-card bg-white rounded-xl shadow-md p-6 flex flex-col items-center transition-transform hover:scale-105">
+    <div className="producto-card bg-white rounded-xl shadow-md p-6 flex flex-col items-center justify-between h-full transition-transform hover:scale-105">
       <NavLink to={`/catalogo/${slug}`} className="w-full">
-        <img src={imagen_url} alt={nombre} className="producto-img mb-4" />
+        <img src={imagen_url} alt={nombre} className="w-full max-h-40 object-contain rounded-md mb-4" />
       </NavLink>
 
       <h3 className="text-xl font-semibold text-center mb-2">{nombre}</h3>
