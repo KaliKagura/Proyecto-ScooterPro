@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../supabase/supabaseClient";
 import CrearTecnicoModal from "./crearTecnico";
+import EditarUsuario from "./editarUsuario";
 
 const UsuariosAdmin = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
 
   const fetchUsuarios = async () => {
     setCargando(true);
@@ -31,6 +33,22 @@ const UsuariosAdmin = () => {
       setError(err.message);
     } finally {
       setCargando(false);
+    }
+  };
+
+  const suspenderUsuario = async (id) => {
+    try {
+      const { error } = await supabase
+        .from("usuarios")
+        .update({ estado: "suspendido" })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      fetchUsuarios();
+    } catch (err) {
+      console.error("Error al suspender usuario:", err.message);
+      alert("Error al suspender usuario");
     }
   };
 
@@ -60,6 +78,7 @@ const UsuariosAdmin = () => {
                 <th className="py-3 px-4 border-b">Nombre</th>
                 <th className="py-3 px-4 border-b">Email</th>
                 <th className="py-3 px-4 border-b">Rol</th>
+                <th className="py-3 px-4 border-b">Estado</th>
                 <th className="py-3 px-4 border-b">Acciones</th>
               </tr>
             </thead>
@@ -71,12 +90,19 @@ const UsuariosAdmin = () => {
                 >
                   <td className="py-3 px-4 border-b">{usuario.nombre}</td>
                   <td className="py-3 px-4 border-b">{usuario.email}</td>
-                  <td className="py-3 px-4 border-b">{usuario.rol}</td>
+                  <td className="py-3 px-4 border-b capitalize">{usuario.rol}</td>
+                  <td className="py-3 px-4 border-b capitalize" >{usuario.estado}</td>
                   <td className="py-3 px-4 border-b space-x-2">
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm shadow-sm mr-2">
+                    <button
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm shadow-sm mr-2"
+                      onClick={() => setUsuarioEditando(usuario)}
+                    >
                       Editar
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm shadow-sm">
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm shadow-sm"
+                      onClick={() => suspenderUsuario(usuario.id)}
+                    >
                       Suspender
                     </button>
                   </td>
@@ -90,9 +116,15 @@ const UsuariosAdmin = () => {
       {mostrarModal && (
         <CrearTecnicoModal
           onClose={() => setMostrarModal(false)}
-          onUsuarioCreado={() => {
-            fetchUsuarios(); // Refresca la tabla después de crear
-          }}
+          onUsuarioCreado={fetchUsuarios}
+        />
+      )}
+
+      {usuarioEditando && (
+        <EditarUsuario
+          usuario={usuarioEditando}
+          onClose={() => setUsuarioEditando(null)}
+          onUsuarioActualizado={fetchUsuarios} // coincide con prop en editarUsuario.js
         />
       )}
     </div>
