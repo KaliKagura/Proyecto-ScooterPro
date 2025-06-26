@@ -51,6 +51,7 @@ const Header = () => {
       } else {
         console.error("No se encontró nombre:", error);
         setUserName("");
+        setUserRole("");
       }
     };
 
@@ -59,10 +60,12 @@ const Header = () => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         if (!session) {
+          // Usuario cerró sesión o expiró
           setUser(null);
           setUserName("");
           setUserRole("");
         } else {
+          // Usuario inició sesión o renovó sesión
           const user = session.user;
           setUser(user);
 
@@ -78,26 +81,16 @@ const Header = () => {
           } else {
             setUserName("");
             setUserRole("");
-          };
+          }
         }
       }
     );
 
+    // Limpieza del listener al desmontar el componente
     return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuVisible(false);
+      if (listener && listener.subscription) {
+        listener.subscription.unsubscribe();
       }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -106,12 +99,18 @@ const Header = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error al cerrar sesión:", error.message);
+      return;
+    }
+    // Limpia estados
     setUser(null);
     setUserName("");
     setUserRole("");
     setMenuVisible(false);
-    window.location.href = "/";
+    // Redirige con React Router (mejor que window.location)
+    window.location.replace("/");
   };
 
   return (

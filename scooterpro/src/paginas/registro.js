@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../paginas/css/registro.css"; // Asegúrate que esta ruta sea correcta
+import "../paginas/css/registro.css";
 import { signUpUser } from "../supabase/authService";
 
 const Registro = () => {

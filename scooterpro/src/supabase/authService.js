@@ -8,6 +8,7 @@ export const signUpUser = async ({ email, password, nombre, rol, telefono, direc
   });
 
   if (authError) throw authError;
+  if (!authData.user) throw new Error("No se pudo obtener el usuario luego del registro");
 
   const userId = authData.user.id;
 
@@ -15,6 +16,7 @@ export const signUpUser = async ({ email, password, nombre, rol, telefono, direc
   const { error: insertError } = await supabase.from('usuarios').insert([
     {
       id: userId,
+      email,
       nombre,
       rol,
       telefono,
