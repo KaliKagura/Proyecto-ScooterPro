@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AgregarCarrito } from '../stores/carrito';
-import { supabase } from '../supabase/supabaseClient';
+import supabase from '../supabase/supabaseClient';
 
 const Producto = () => {
     const { slug } = useParams();

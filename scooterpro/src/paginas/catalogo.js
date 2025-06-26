@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductoCarrito from '../components/productoCarrito'
-import { supabase } from '../supabase/supabaseClient.js'
+import supabase from '../supabase/supabaseClient.js'
 
 
 const Catalogo = () => {

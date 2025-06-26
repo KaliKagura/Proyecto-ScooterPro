@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { cambiarCantidad } from '../stores/carrito';
-import { supabase } from '../supabase/supabaseClient';
+import supabase from '../supabase/supabaseClient';
 
 const ItemCarrito = (props) => {
   const { prodID, cantidad, tipoProd } = props.data;
