@@ -46,7 +46,9 @@ const ServiciosAdmin = () => {
               <td className="py-2 px-4 border-b">{serv.fecha}</td>
               <td className="py-2 px-4 border-b">{serv.estado}</td>
               <td className="py-2 px-4 border-b">
-                <button className="text-blue-500 hover:underline">Actualizar</button>
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm shadow-sm">
+                  Actualizar
+                </button>
               </td>
             </tr>
           ))}
