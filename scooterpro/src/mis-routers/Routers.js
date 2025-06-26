@@ -9,7 +9,8 @@ import Registro from '../paginas/registro';
 import Login from '../paginas/login';
 import Compra from '../paginas/compra';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PerfilAdmin from '../paginas/administracion/perfilAdmin'
+//import PerfilAdmin from '../paginas/administracion/perfilAdmin'
+import AdminPanel from '../paginas/panelAdmin';
 
 
 const AppRouter = () => {
@@ -26,7 +27,7 @@ const AppRouter = () => {
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/compra" element={<Compra />} />
-          <Route path="/administracion" element={<PerfilAdmin />} />
+          <Route path="/administracion" element={<AdminPanel />} />
         </Route>
       </Routes>
     </BrowserRouter>

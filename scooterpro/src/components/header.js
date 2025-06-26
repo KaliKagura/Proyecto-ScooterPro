@@ -70,9 +70,9 @@ const Header = () => {
           >
             Registrarse
           </NavLink>
-          {/*<NavLink to="/administracion" className="bg-slate-700 px-4 py-2 rounded hover:bg-slate-600">
+          <NavLink to="/administracion" className="bg-slate-700 px-4 py-2 rounded hover:bg-slate-600">
             admin
-          </NavLink>*/}
+          </NavLink>
 
           {/* Carrito */}
           <div
