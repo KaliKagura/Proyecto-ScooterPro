@@ -47,7 +47,10 @@ const EditarUsuario = ({ usuario, onClose, onUsuarioActualizado }) => {
   if (!usuario) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div
+      className="fixed inset-0 flex justify-center items-center z-50"
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+    >
       <div className="bg-white rounded p-6 w-96 shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Editar Usuario</h2>
         <form onSubmit={handleSubmit}>

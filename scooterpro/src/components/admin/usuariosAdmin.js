@@ -62,9 +62,9 @@ const UsuariosAdmin = () => {
 
       <button
         onClick={() => setMostrarModal(true)}
-        className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded mb-4 shadow"
+        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow"
       >
-        Agregar Técnico
+       + Agregar Técnico
       </button>
 
       {cargando && <p>Cargando usuarios...</p>}
